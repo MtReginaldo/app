@@ -17,12 +17,34 @@ function start(){
 // package.json -> Lista dependencias
 // package-lock.json -> Mapeamento de componentes das dependencias
 
-const { select } = require('@inquirer/prompts')
+const { select , input } = require('@inquirer/prompts')
+
+let metas = [ ]
+
+const cadastrarMeta = async () => {
+    const meta = await input({ message: "Digite a meta"})
+
+                   // == comparação
+    if(meta.length == 0){
+        console.log("A meta não pode estar vazia")
+        return
+        // cadastrarMeta()
+    }
+
+    // colocar dentro
+    metas.push(
+        {
+            value: meta, 
+            checked: false
+        }
+    )
+}
 
 const start = async () => {
     while(true){ // menu
         
-                      // esperar o usuario digitar   
+                      // esperar o usuario digitar  
+                      // await espera uma promessa (volta com uma resposta) 
         const opcao = await select({
             message: "Menu >",
             choices: [
@@ -30,7 +52,7 @@ const start = async () => {
                     name: "Cadastrar meta",
                     value: "cadastrar"
                 },
-                {
+                {                                          
                     name: "Listar metas",
                     value: "listar"
                 },
@@ -43,10 +65,11 @@ const start = async () => {
 
         switch(opcao){
             case "cadastrar":
-                console.log("vamos cadastrar")
+                await cadastrarMeta()
                 break
             case "listar":
                 console.log("vamos listar")
+                console.log(metas)
                 break
             case "sair":
                 console.log("Até a próxima!")
