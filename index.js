@@ -12,9 +12,13 @@ function start(){
 }
 */
 
+// npm node package manager
+// npm instal inquirer
+// package.json -> Lista dependencias
+// package-lock.json -> Mapeamento de componentes das dependencias
 
 function start(){
-    while(true){
+    while(true){ // menu
         
         let opcao = "sair"
 
