@@ -31,6 +31,7 @@ Apresentar os dados
 - [x] Strings (texto): "" '' ``
 - [x] Numbers: 2 1.4
 - [x] Boolean: true, false
+- Todos estes dados são tratados como objetos no JavaScript
 
 # Operadores
 
