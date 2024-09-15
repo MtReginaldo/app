@@ -18,6 +18,7 @@ function start(){
 // package-lock.json -> Mapeamento de componentes das dependencias
 
 const { select , input, checkbox } = require('@inquirer/prompts')
+let mensagem = "Bem vindo ao App de metas!";
 
 /*
 let meta = {
@@ -33,7 +34,7 @@ const cadastrarMeta = async () => {
 
                    // == comparação
     if(meta.length == 0){
-        console.log("A meta não pode estar vazia")
+        mensagem = "A meta não pode estar vazia"
         return
         // cadastrarMeta()
     }
@@ -44,6 +45,8 @@ const cadastrarMeta = async () => {
             checked: false
         }
     )
+
+    mensagem = "Meta(s) cadastrada(s) com sucesso!"
 }
 
 const deletarMetas = async () => {
@@ -60,7 +63,7 @@ const deletarMetas = async () => {
     })
 
     if(itemsADeletar.length ==0){
-        console.log("Nenhum item para deletar")
+        mensagem = "Nenhum item para deletar"
         return
     }
 
@@ -70,7 +73,7 @@ const deletarMetas = async () => {
         })
     })
 
-    console.log("Meta(s) deletada(s) com sucesso!")
+    mensagem = "Meta(s) deletada(s) com sucesso!"
 }
 
 const listarMetas = async () => {
@@ -85,7 +88,7 @@ const listarMetas = async () => {
     })
 
     if(respostas.length == 0){
-        console.log("Nenhuma meta selecionada!")
+        mensagem = "Nenhuma meta selecionada!"
         return
     }
 
@@ -97,7 +100,7 @@ const listarMetas = async () => {
         meta.checked = true
     })
 
-    console.log('Meta(s) marcadas como concluída(s)')
+    mensagem = "Meta(s) marcadas como concluída(s)"
 }
 
 const metasAbertas = async () => {
@@ -107,7 +110,7 @@ const metasAbertas = async () => {
     }) 
 
     if(abertas.length == 0){
-        console.log("Não existem metas em aberto :)")
+        mensagem = "Não existem metas em aberto :)"
         return
     }
 
@@ -124,7 +127,7 @@ const metasRealizadas = async () => {
     }) 
 
     if(realizadas.length == 0){
-        console.log("Não existem metas realizadas :(")
+        mensagme = "Não existem metas realizadas :("
         return
     }
 
@@ -134,10 +137,21 @@ const metasRealizadas = async () => {
     })
 }
 
+const mostrarMensagem = () => {
+    console.clear();
+
+    if(mensagem != ""){
+        console.log(mensagem)
+        console.log("")
+        mensagem = ""
+    }
+}
+
 const start = async () => {
     while(true){ // menu
                  // esperar o usuario digitar  
                  // await espera uma promessa (volta com uma resposta) 
+        mostrarMensagem();
         const opcao = await select({
             message: "Menu >",
             choices: [
