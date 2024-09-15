@@ -53,14 +53,14 @@ const listarMetas = async () => {
         instructions: false,
     })
 
+    metas.forEach((m) => {
+        m.checked = false
+    })
+
     if(respostas.length == 0){
         console.log("Nenhuma meta selecionada!")
         return
     }
-
-    metas.forEach((m) => {
-        m.checked = false
-    })
 
     respostas.forEach((resposta) => {
         const meta = metas.find((m) => {
@@ -73,7 +73,25 @@ const listarMetas = async () => {
     console.log('Meta(s) marcadas como concluída(s)')
 }
 
+const metasAbertas = async () => {
+
+    const abertas = metas.filter((meta) => {
+        return meta.checked != true // se falso diferente de verdadeiro
+    }) 
+
+    if(abertas.length == 0){
+        console.log("Não existem metas em aberto :)")
+        return
+    }
+
+    await select({
+        message: "Metas abertas: " + abertas.length,
+        choices: [...abertas]        
+    })
+}
+
 const metasRealizadas = async () => {
+
     const realizadas = metas.filter((meta) => {
         return meta.checked // se a meta tiver realizada ela vai pra lista 
     }) 
@@ -84,15 +102,15 @@ const metasRealizadas = async () => {
     }
 
     await select({
-        message: "Metas Realizadas",
+        message: "Metas realizadas " + realizadas.length,
         choices: [...realizadas]        
     })
 }
 
 const start = async () => {
     while(true){ // menu
-                      // esperar o usuario digitar  
-                      // await espera uma promessa (volta com uma resposta) 
+                 // esperar o usuario digitar  
+                 // await espera uma promessa (volta com uma resposta) 
         const opcao = await select({
             message: "Menu >",
             choices: [
@@ -104,6 +122,10 @@ const start = async () => {
                     name: "Listar metas",
                     value: "listar"
                 },
+                {                                          
+                    name: "Metas abertas",
+                    value: "abertas"
+                },                
                 {                                          
                     name: "Metas realizadas",
                     value: "realizadas"
@@ -122,6 +144,9 @@ const start = async () => {
             case "listar":
                 await listarMetas()
                 break
+            case "abertas":
+                await metasAbertas()
+                break                
             case "realizadas":
                 await metasRealizadas()
                 break
